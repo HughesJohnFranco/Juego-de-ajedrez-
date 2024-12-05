@@ -14,9 +14,9 @@ public final class Tablero extends JPanel {
     public int tamCasilla = 70;  
     int columnas = 8;  
     int filas = 8;  
-    public Pieza piezaSeleccionada; //Se guarda la pieza que sea seleccionada
-    ArrayList<Pieza> listaDePiezas = new ArrayList<>();  //contiene todas las piezas en el tablero
-    Entrada entrada = new Entrada(this);  // maneja los eventos raton
+    public Pieza piezaSeleccionada; 
+    ArrayList<Pieza> listaDePiezas = new ArrayList<>();  
+    Entrada entrada = new Entrada(this);  
 
 
     public Tablero() {  
@@ -27,7 +27,6 @@ public final class Tablero extends JPanel {
     }  
 
 
-
     public Pieza obtenerPieza(int col, int fila) {  
         for (Pieza pieza : listaDePiezas) {  
             if (pieza.col == col && pieza.fila == fila) {  
@@ -36,39 +35,29 @@ public final class Tablero extends JPanel {
         }  
         return null;  
     }  
-
-
     
     
     public void realizarMovimiento(Movimiento movimiento) {  
-
         String color = movimiento.pieza.esBlanco ? "Blanco" : "Negro";  
         String comportamiento = movimiento.pieza.getCaracter();
         String nivelAtaque = movimiento.pieza.getNivelAtaque();
-
-        //imprime por consola la informacion de la pieza
         System.out.println("\nMOVISTE: " + movimiento.pieza.getClass().getSimpleName() + " (Color: " + color + ") \nPOSICION: (" + movimiento.pieza.col + ", " + movimiento.pieza.fila + ") -> (" + movimiento.colNueva + ", " + movimiento.filaNueva + ")" +"\nCARACTER: " + comportamiento + "\nNIVEL DE ATAQUE: " + nivelAtaque + "\n");
-
         movimiento.pieza.col = movimiento.colNueva;  
         movimiento.pieza.fila = movimiento.filaNueva;  
         movimiento.pieza.xPos = movimiento.colNueva * tamCasilla;  
         movimiento.pieza.yPos = movimiento.filaNueva * tamCasilla;   
         movimiento.pieza.esPrimerMov = false;
-
         capturar(movimiento);  
     }  
     
 
-    //elimina la pieza capturada
     public void capturar(Movimiento movimiento) {  
         if (movimiento.captura != null) {  
             String nombrePiezaCapturada = movimiento.captura.getClass().getSimpleName();
             listaDePiezas.remove(movimiento.captura);
-    
             JOptionPane.showMessageDialog(this, "Te comiste :  " + nombrePiezaCapturada, "NUEVA CAPTURA", JOptionPane.INFORMATION_MESSAGE);
         }
     }  
-
 
 
     public boolean esValidoMover(Movimiento movimiento) {  
@@ -84,7 +73,6 @@ public final class Tablero extends JPanel {
         return true;  
     }  
 
-    
 
     public boolean mismoEquipo(Pieza p1, Pieza p2) {  
         if (p1 == null || p2 == null) {  
@@ -95,12 +83,7 @@ public final class Tablero extends JPanel {
 
 
 
-
-    
-
-    //pone todas las piezas en sus posiciones iniciales y las guarda en listaDePiezas.
     public void agregarPiezas() {  
-        
         listaDePiezas.add(new Torre(this, 0, 0, false));  
         listaDePiezas.add(new Caballo(this, 1, 0, false));  
         listaDePiezas.add(new Alfil(this, 2, 0, false));  
@@ -137,22 +120,17 @@ public final class Tablero extends JPanel {
         listaDePiezas.add(new Peon(this, 6, 6, true));  
         listaDePiezas.add(new Peon(this, 7, 6, true));
        
-        CConexionDAO piezaDAO = new CConexionDAO();  // Suponiendo que esta es tu clase DAO
+        CConexionDAO piezaDAO = new CConexionDAO(); 
         piezaDAO.guardarPiezas(listaDePiezas);
     }  
 
 
-
-    //tablero y las piezas
     @Override  
     public void paintComponent(Graphics g) {  
         super.paintComponent(g);  
         Graphics2D g2d = (Graphics2D) g;
-        
- 
         Color marronClaro = new Color(248, 196, 113);
-        Color marronOscuro = new Color(147, 87, 22);
- 
+        Color marronOscuro = new Color(147, 87, 22); 
         for (int f = 0; f < filas; f ++) {  
             for (int c = 0; c < columnas; c++) {  
                 g2d.setColor((c + f) % 2 == 0 ? marronClaro : marronOscuro);  
@@ -160,7 +138,6 @@ public final class Tablero extends JPanel {
             }  
         }
 
-        //marca los movimientos que se pueden hacer
         Color captura = new Color(0, 174, 83); 
         if(piezaSeleccionada != null){
             for(int f = 0; f < filas; f ++){
@@ -173,7 +150,6 @@ public final class Tablero extends JPanel {
             }
         }
 
-        //dibujar las piezas
         for (Pieza pieza : listaDePiezas) {  
             pieza.pintar(g2d);  
         }  
