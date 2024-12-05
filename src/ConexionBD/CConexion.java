@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class CConexion {
 
-    private static final String usuario = "root";
-    private static final String contrasenia = "E3tttx869&";
-    private static final String bd = "ajedrez";
+    private static final String usuario = "____";
+    private static final String contrasenia = "____";
+    private static final String bd = "____";
     private static final String ip = "localhost";
     private static final String puerto = "3306";
     private static final String cadena = "jdbc:mysql://" + ip + ":" + puerto + "/" + bd;
