@@ -21,11 +21,6 @@ public abstract class Pieza {
     Tablero tablero;
     BufferedImage hoja;    
 
-    
-
-     
-
-
     public Pieza(){}
     public Pieza(Tablero tablero) {  
         this.tablero = tablero;  
@@ -40,18 +35,15 @@ public abstract class Pieza {
         }  
     }  
 
-
     public String getCaracter() {
         return caracter;
     }
-
     public String getNivelAtaque() {
         return nivelAtaque;
     }
 
     
     public boolean esMovimientoValido(int col, int row){return  true;}
-
     public boolean moverChoqueConPieza(int col, int row){return false;}
 
 
